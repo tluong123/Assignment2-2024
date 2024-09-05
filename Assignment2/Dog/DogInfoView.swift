@@ -6,14 +6,15 @@ struct DogInfoView: View {
     @Environment(\.presentationMode) var presentationMode
 
     // Temporary state variables to hold edited values
-    // (initialize these with the original dog data on appear, just like before)
     @State private var editedName: String = ""
-    @State private var editedAge: String = ""
+    @State private var editedAge: Int = 0
     @State private var editedBreed: String = ""
     @State private var editedSize: String = ""
-    @State private var editedWeight: String = ""
+    @State private var editedWeight: Int = 0
     @State private var editedMedication: String = ""
-
+    let possibleAges = Array(0...25)
+    let possibleWeights = Array(0...100)
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -22,9 +23,11 @@ struct DogInfoView: View {
                         .onAppear {
                             editedName = dogManager.dog.name
                         }
-                    TextField("Age", text: $editedAge)
-                        .onAppear {
-                            editedAge = dogManager.dog.age
+
+                    Picker("Age", selection: $editedAge) {
+                        ForEach(possibleAges, id: \.self) { age in
+                            Text("\(age)").tag(age)
+                            }
                         }
                     TextField("Breed", text: $editedBreed)
                         .onAppear {
@@ -34,10 +37,13 @@ struct DogInfoView: View {
                         .onAppear {
                             editedSize = dogManager.dog.size
                         }
-                    TextField("Weight", text: $editedWeight)
-                        .onAppear {
-                            editedWeight = dogManager.dog.weight
+
+                    Picker("Weight (kg)", selection: $editedWeight) {
+                        ForEach(possibleWeights, id: \.self) { weight in
+                            Text("\(weight)").tag(weight)
                         }
+                    }
+
                     TextField("Medication", text: $editedMedication)
                         .onAppear {
                             editedMedication = dogManager.dog.medication
@@ -62,12 +68,14 @@ struct DogInfoView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         // Update dogManager with edited values
-                        dogManager.dog.name = editedName
-                        dogManager.dog.age = editedAge
-                        dogManager.dog.breed = editedBreed
-                        dogManager.dog.size = editedSize
-                        dogManager.dog.weight = editedWeight
-                        dogManager.dog.medication = editedMedication
+                        dogManager.updateDog(
+                            name: editedName,
+                            age: editedAge,
+                            breed: editedBreed,
+                            size: editedSize,
+                            weight: editedWeight,
+                            medication: editedMedication
+                        )
 
                         presentationMode.wrappedValue.dismiss()
                     }

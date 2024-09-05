@@ -15,7 +15,7 @@ class DogManager: ObservableObject {
         self.dog = dog
     }
     
-    func updateDog(name: String, age: String, breed: String, size: String, weight: String, medication: String) {
+    func updateDog(name: String, age: Int, breed: String, size: String, weight: Int, medication: String) {
         dog.name = name
         dog.age = age
         dog.breed = breed

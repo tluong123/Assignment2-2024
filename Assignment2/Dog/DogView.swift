@@ -25,7 +25,9 @@ struct DogView: View {
                     HStack {
                         Text("Age:")
                         Spacer()
-                        Text(dogManager.dog.age)
+                        if dogManager.dog.age > 0 {
+                            Text("\(dogManager.dog.age)")
+                        }
                     }
                     HStack {
                         Text("Breed:")
@@ -40,7 +42,9 @@ struct DogView: View {
                     HStack {
                         Text("Weight:")
                         Spacer()
-                        Text(dogManager.dog.weight)
+                        if dogManager.dog.weight > 0 {
+                        Text("\(dogManager.dog.weight)")
+                        }
                     }
                     HStack {
                         Text("Medication:")

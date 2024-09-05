@@ -15,12 +15,16 @@ struct TaskListView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // Display tasks
-                List {
-                    ForEach(taskManager.tasks) { task in
-                        TaskRowView(task: task)
+                if taskManager.tasks.isEmpty {
+                    Text("No upcoming tasks")
+                        .foregroundColor(.gray)
+                } else {
+                    List {
+                        ForEach(taskManager.tasks) { task in
+                            TaskRowView(task: task)
+                        }
+                        .onDelete(perform: taskManager.removeTask)
                     }
-                    .onDelete(perform: taskManager.removeTask)
                 }
                 
                 // Add Task Button
