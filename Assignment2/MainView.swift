@@ -46,7 +46,7 @@ struct MainView: View {
                         .padding()
                     }
                     
-                    Spacer()
+                    
                     VStack(alignment: .leading) {
                         Text("Upcoming Walks")
                             .font(.headline)
@@ -61,15 +61,25 @@ struct MainView: View {
                             List {
                                 ForEach(taskManager.tasks) { task in
                                     HStack {
-                                        Text(task.title)
-                                            .font(.headline)
+                                        VStack(alignment: .leading) { // Use VStack for vertical layout
+                                            Text(task.title)
+                                                .font(.headline)
+                                            
+                                            if !task.location.isEmpty { // Conditionally show location
+                                                Text("At \(task.location)")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.gray)
+                                            }
+                                        }
+                                        
                                         Spacer()
+                                        
                                         if task.isCompleted {
                                             Text("Complete")
                                                 .font(.subheadline)
                                                 .foregroundColor(.green)
                                         } else if let dueDate = task.dueDate {
-                                            Text("Due: \(dueDate, style: .date)")
+                                            Text("\(dueDate, style: .date)")
                                                 .font(.subheadline)
                                                 .foregroundColor(.red)
                                         }

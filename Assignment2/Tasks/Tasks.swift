@@ -13,6 +13,8 @@ protocol Task {
     var title: String { get set }
     var isCompleted: Bool { get set }
     var dueDate: Date? { get set }
+    var location: String { get set } // Add location property
+    var description: String { get set } // Add description property
 }
 
 class SimpleTask: Task, Identifiable, ObservableObject {
@@ -20,12 +22,15 @@ class SimpleTask: Task, Identifiable, ObservableObject {
     @Published var title: String
     @Published var isCompleted: Bool
     @Published var dueDate: Date?
-    
-    init(id: UUID = UUID(), title: String, isCompleted: Bool = false, dueDate: Date? = nil) {
+    @Published var location: String
+    @Published var description: String
+
+    init(id: UUID = UUID(), title: String, isCompleted: Bool = false, dueDate: Date? = nil, location: String = "", description: String = "") {
         self.id = id
         self.title = title
         self.isCompleted = isCompleted
         self.dueDate = dueDate
+        self.location = location
+        self.description = description
     }
 }
-

@@ -16,7 +16,7 @@ struct TaskListView: View {
         NavigationStack {
             VStack {
                 if taskManager.tasks.isEmpty {
-                    Text("No upcoming tasks")
+                    Text("No upcoming walks")
                         .foregroundColor(.gray)
                 } else {
                     List {
@@ -31,7 +31,7 @@ struct TaskListView: View {
                 Button(action: {
                     showAddTaskView.toggle()
                 }) {
-                    Text("Add New Task")
+                    Text("Add New Walk")
                         .font(.headline)
                         .foregroundColor(.blue)
                 }
@@ -41,7 +41,7 @@ struct TaskListView: View {
                         .environmentObject(taskManager)
                 }
             }
-            .navigationTitle("Task List")
+            .navigationTitle("Walk Schedule")
         }
     }
 }
@@ -50,5 +50,6 @@ struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
         TaskListView()
             .environmentObject(TaskManager())
+            .environmentObject(DogManager())
     }
 }
