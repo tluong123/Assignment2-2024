@@ -62,18 +62,18 @@ struct DogView: View {
                 .sheet(isPresented: $navigateToDogInfoView) {
                     DogInfoView()
                         .onDisappear {
-                            shouldRefresh.toggle() // Toggle to force a refresh
+                            shouldRefresh.toggle()
                         }
                 }
             }
             .navigationTitle("Dog Info Display")
-            .id(shouldRefresh) // Force re-render when shouldRefresh changes
+            .id(shouldRefresh)
         }
     }
 }
 struct DogView_Previews: PreviewProvider {
     static var previews: some View {
         DogView()
-            .environmentObject(DogManager()) // Make it available in the environment
+            .environmentObject(DogManager())
     }
 }

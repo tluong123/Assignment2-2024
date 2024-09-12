@@ -12,7 +12,7 @@ struct TaskRowView: View {
     @EnvironmentObject var taskManager: TaskManager
     @ObservedObject var task: SimpleTask
     @State private var showEditTaskView = false
-    @State private var isShowingDetails = false // To control detail view presentation
+    @State private var isShowingDetails = false
 
     var body: some View {
         HStack {
@@ -43,11 +43,11 @@ struct TaskRowView: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            isShowingDetails.toggle() // Show detail view on tap
+            isShowingDetails.toggle()
         }
         .swipeActions(edge: .trailing) {
             Button(action: {
-                taskManager.toggleTaskCompletion(task) // Mark as complete on swipe
+                taskManager.toggleTaskCompletion(task)
             }) {
                 Label("Complete", systemImage: "checkmark.circle.fill")
             }
@@ -63,8 +63,11 @@ struct TaskRowView: View {
         .sheet(isPresented: $showEditTaskView) {
             AddTaskView(task: task)
                 .environmentObject(taskManager)
+                .onDisappear {
+                    taskManager.objectWillChange.send()
+                }
         }
-        .sheet(isPresented: $isShowingDetails) { // Detail view sheet
+        .sheet(isPresented: $isShowingDetails) {
             WalkDetailView(task: task)
         }
     }

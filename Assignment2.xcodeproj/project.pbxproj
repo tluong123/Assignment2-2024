@@ -15,6 +15,8 @@
 		5791898A2C8712FC00052BB5 /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579189892C8712FC00052BB5 /* Tasks.swift */; };
 		5791898D2C87136200052BB5 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5791898C2C87136200052BB5 /* TaskListView.swift */; };
 		5791898F2C87163C00052BB5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5791898E2C87163C00052BB5 /* MainView.swift */; };
+		579B8EB72C9065AA007CB024 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 579B8EB62C9065AA007CB024 /* FSCalendar */; };
+		579B8EB92C9065EA007CB024 /* FSCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579B8EB82C9065EA007CB024 /* FSCalendarView.swift */; };
 		57D48B972C87265C00942D20 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D48B962C87265C00942D20 /* Dog.swift */; };
 		57D48B992C87269F00942D20 /* DogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D48B982C87269F00942D20 /* DogManager.swift */; };
 		57D48B9B2C8726B300942D20 /* DogInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D48B9A2C8726B300942D20 /* DogInfoView.swift */; };
@@ -34,6 +36,7 @@
 		579189892C8712FC00052BB5 /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
 		5791898C2C87136200052BB5 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		5791898E2C87163C00052BB5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		579B8EB82C9065EA007CB024 /* FSCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSCalendarView.swift; sourceTree = "<group>"; };
 		57D48B962C87265C00942D20 /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		57D48B982C87269F00942D20 /* DogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogManager.swift; sourceTree = "<group>"; };
 		57D48B9A2C8726B300942D20 /* DogInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogInfoView.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				579B8EB72C9065AA007CB024 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +105,7 @@
 				57D48BA02C875B3A00942D20 /* TaskRowView.swift */,
 				57D48B9E2C87414E00942D20 /* AddTaskView.swift */,
 				B8C8F4CB2C8C724A00F9E8E0 /* WalkDetailView.swift */,
+				579B8EB82C9065EA007CB024 /* FSCalendarView.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -132,6 +137,9 @@
 			dependencies = (
 			);
 			name = Assignment2;
+			packageProductDependencies = (
+				579B8EB62C9065AA007CB024 /* FSCalendar */,
+			);
 			productName = Assignment2;
 			productReference = 579189762C870E4C00052BB5 /* Assignment2.app */;
 			productType = "com.apple.product-type.application";
@@ -160,6 +168,9 @@
 				Base,
 			);
 			mainGroup = 5791896D2C870E4C00052BB5;
+			packageReferences = (
+				579B8EB52C9065AA007CB024 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			productRefGroup = 579189772C870E4C00052BB5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -191,6 +202,7 @@
 				57D48B9D2C87324500942D20 /* DogView.swift in Sources */,
 				5791898A2C8712FC00052BB5 /* Tasks.swift in Sources */,
 				57D48B972C87265C00942D20 /* Dog.swift in Sources */,
+				579B8EB92C9065EA007CB024 /* FSCalendarView.swift in Sources */,
 				5791898F2C87163C00052BB5 /* MainView.swift in Sources */,
 				579189882C8712EC00052BB5 /* TaskList.swift in Sources */,
 				5791898D2C87136200052BB5 /* TaskListView.swift in Sources */,
@@ -397,6 +409,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		579B8EB52C9065AA007CB024 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		579B8EB62C9065AA007CB024 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 579B8EB52C9065AA007CB024 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5791896E2C870E4C00052BB5 /* Project object */;
 }

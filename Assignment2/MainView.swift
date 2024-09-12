@@ -61,11 +61,11 @@ struct MainView: View {
                             List {
                                 ForEach(taskManager.tasks) { task in
                                     HStack {
-                                        VStack(alignment: .leading) { // Use VStack for vertical layout
+                                        VStack(alignment: .leading) {
                                             Text(task.title)
                                                 .font(.headline)
                                             
-                                            if !task.location.isEmpty { // Conditionally show location
+                                            if !task.location.isEmpty {
                                                 Text("At \(task.location)")
                                                     .font(.subheadline)
                                                     .foregroundColor(.gray)
