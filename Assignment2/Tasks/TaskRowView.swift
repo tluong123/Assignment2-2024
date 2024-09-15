@@ -11,17 +11,17 @@ import SwiftUI
 struct TaskRowView: View {
     @EnvironmentObject var taskManager: TaskManager
     @ObservedObject var task: SimpleTask
-    @State private var showEditTaskView = false
     @State private var isShowingDetails = false
 
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
+                // Displays task title
                 Text(task.title)
                     .font(.headline)
                     .strikethrough(task.isCompleted, color: .gray)
                     .foregroundColor(task.isCompleted ? .gray : .primary)
-
+                // Displays location
                 if !task.location.isEmpty {
                     Text("At \(task.location)")
                         .font(.subheadline)
@@ -30,7 +30,7 @@ struct TaskRowView: View {
             }
 
             Spacer()
-
+            // Shows the scheduled date of the task and if they're completed
             if task.isCompleted {
                 Text("Complete")
                     .font(.subheadline)
@@ -45,13 +45,7 @@ struct TaskRowView: View {
         .onTapGesture {
             isShowingDetails.toggle()
         }
-        .sheet(isPresented: $showEditTaskView) {
-            AddTaskView(task: task)
-                .environmentObject(taskManager)
-                .onDisappear {
-                    taskManager.objectWillChange.send()
-                }
-        }
+
         .sheet(isPresented: $isShowingDetails) {
             WalkDetailView(task: task)
         }

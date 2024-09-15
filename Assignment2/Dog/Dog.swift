@@ -8,14 +8,17 @@
 import Foundation
 import Combine
 
+// Protocol for Dog's information 
 protocol Dog {
-    var id: UUID { get }
+    var id: UUID { get } 
     var name: String { get set }
     var age: Int { get set }
     var breed: String { get set }
     var size: String { get set }
     var weight: Int { get set }
 }
+
+//Implementation of Dog Protocol
 class SimpleDog: Dog, Identifiable, ObservableObject {
     var id: UUID
     @Published var name: String
@@ -24,6 +27,7 @@ class SimpleDog: Dog, Identifiable, ObservableObject {
     @Published var size: String
     @Published var weight: Int
     
+    // Initializer to create a SimpleDog instance
     init(id: UUID = UUID(), name: String = "", age: Int = 0, breed: String = "", size: String = "", weight: Int = 0) {
         self.id = id
         self.name = name

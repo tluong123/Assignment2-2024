@@ -20,14 +20,16 @@ struct TaskListView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                //Calendar which allows user to select date
                 FSCalendarView(selectedDate: $selectedDate)
                     .padding()
                     .frame(height: 400)
                 Spacer()
-
+                //If no tasks on that date, then show message
                 if taskManager.tasks.isEmpty {
                     Text("No upcoming tasks")
                         .foregroundColor(.gray)
+                // If there are tasks, then displays lists of tasks for the date
                 } else {
                     List(selection: $selectedTasks) {
                         ForEach(taskManager.tasks.filter { task in
@@ -41,13 +43,14 @@ struct TaskListView: View {
                         }
                     }
                 }
-
+                
                 Button(action: {
-//                    if dogManager.dog.name.isEmpty {
-//                        showAddDogAlert = true
-//                    } else {
+                    // Checks to see if Dog info is available to enforce users to add their dog first
+                    if dogManager.dog.name.isEmpty {
+                        showAddDogAlert = true
+                    } else {
                         showAddTaskView.toggle()
-//                    }
+                    }
                 }) {
                     Text("Add New Activity")
                         .font(.headline)
@@ -58,6 +61,7 @@ struct TaskListView: View {
                     AddTaskView()
                         .environmentObject(taskManager)
                 }
+                //Error to enforce user to add dog information first
                 .alert("Please add your dog's information first.", isPresented: $showAddDogAlert) {
                     Button("OK", role: .cancel) { }
                 }

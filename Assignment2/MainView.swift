@@ -16,6 +16,7 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
                 VStack {
+                    // If no dog information is available, show a button
                     if dogManager.dog.name.isEmpty {
                         NavigationLink(destination: DogInfoView()
                             .onDisappear {
@@ -30,6 +31,7 @@ struct MainView: View {
                             }
                             .padding()
                     } else {
+                        // If dog information is available, display it
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(dogManager.dog.name)
@@ -46,11 +48,12 @@ struct MainView: View {
                         .padding()
                     }
                     
-                    
+                    //Task Schedule Section
                     VStack(alignment: .leading) {
                         Text("Upcoming Schedule")
                             .font(.headline)
                             .padding(.leading)
+                        // If there are no tasks, display a message
                         if taskManager.tasks.isEmpty {
                             Text("No activites scheduled")
                                 .font(.subheadline)
@@ -58,6 +61,7 @@ struct MainView: View {
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .center)
                         } else {
+                            // Otherwise, display the list of tasks
                             List {
                                 ForEach(taskManager.tasks) { task in
                                     HStack {
@@ -73,7 +77,7 @@ struct MainView: View {
                                         }
                                         
                                         Spacer()
-                                        
+                                        // Display "Complete" or date scheduled
                                         if task.isCompleted {
                                             Text("Complete")
                                                 .font(.subheadline)
@@ -93,8 +97,9 @@ struct MainView: View {
                     
                     Spacer()
                     
-                    
+                    // Taskbar buttons
                     HStack {
+                        // Link to Calendar
                         NavigationLink(destination: TaskListView()
                             .environmentObject(taskManager)
                             .onDisappear {
@@ -115,7 +120,7 @@ struct MainView: View {
                         }
                         
                         Spacer()
-                        
+                        // Link to viewing Dog information
                         NavigationLink(destination: DogView()
                             .onDisappear {
                                 shouldRefresh.toggle()

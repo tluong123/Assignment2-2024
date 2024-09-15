@@ -20,7 +20,6 @@ struct WalkDetailView: View {
                 Text(task.title)
                     .font(.largeTitle)
                     .padding()
-                
                 VStack(alignment: .leading) {
                     if let dueDate = task.dueDate {
                         VStack(alignment: .leading) {
@@ -30,7 +29,7 @@ struct WalkDetailView: View {
                                 .padding(.bottom)
                         }
                     }
-                    
+                    // Show information if available
                     if !task.location.isEmpty {
                         VStack(alignment: .leading) {
                             Text("Location")
@@ -39,7 +38,7 @@ struct WalkDetailView: View {
                                 .padding(.bottom)
                         }
                     }
-                    
+                    // Show information if available
                     if !task.description.isEmpty {
                         VStack(alignment: .leading) {
                             Text("Description")
@@ -57,6 +56,7 @@ struct WalkDetailView: View {
                     taskManager.toggleTaskCompletion(task)
                     presentationMode.wrappedValue.dismiss()
                 }) {
+                    // Added button to toggle completion
                     Text("Mark Complete")
                         .font(.headline)
                         .padding()
@@ -71,13 +71,14 @@ struct WalkDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
+                        // Added Edit Task Button
                         Button {
                             showEditTaskView = true
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
                         .tint(.blue)
-                        
+                        // Added Delete Task button
                         Button(role: .destructive) {
                             if let index = taskManager.tasks.firstIndex(of: task) {
                                 taskManager.removeTask(at: IndexSet(integer: index))

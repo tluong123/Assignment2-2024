@@ -38,6 +38,7 @@ struct AddTaskView: View {
                         Text("*")
                             .foregroundColor(.red)
                     }
+                    //Suggested activity names
                     TextField("Walk, Haircut, Medication, Vet Visit", text: $taskTitle)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
@@ -56,7 +57,7 @@ struct AddTaskView: View {
                 .padding()
 
                 VStack(alignment: .leading) {
-                    Text("Description")
+                    Text("Description (optional)")
                         .font(.headline)
                     TextField("Enter description", text: $taskDescription)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -65,8 +66,9 @@ struct AddTaskView: View {
 
                 DatePicker("Scheduled Date", selection: $taskDueDate, displayedComponents: [.date, .hourAndMinute])
                     .padding()
-
+                
                 Button(action: {
+                    // If required information is no input, then display error
                     if taskTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
                        taskLocation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                         showMissingFieldsAlert = true
@@ -78,6 +80,7 @@ struct AddTaskView: View {
                         }
                     }
                 }) {
+                    // Change text depending on if the user if adding or editing
                     Text(task == nil ? "Add to Calendar" : "Save Changes")
                         .font(.headline)
                         .padding()
@@ -90,6 +93,7 @@ struct AddTaskView: View {
                 Spacer()
             }
             .padding()
+            // Change text depending on if the user if adding or editing
             .navigationTitle(task == nil ? "Add New Activity" : "Edit Activity")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {

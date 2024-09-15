@@ -12,8 +12,10 @@ struct DogInfoView: View {
     @State private var editedSize: String = ""
     @State private var editedWeight: Int = 0
 
+    // Arrays to hold possible age and weight values for the Pickers
     let possibleAges = Array(0...25)
     let possibleWeights = Array(0...100)
+    // State variable to control the display of alert for error handling
     @State private var showAlert = false
     
     var body: some View {
@@ -73,6 +75,7 @@ struct DogInfoView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
+                        //Show error if the required information is empty 
                         if editedName.isEmpty || editedAge == 0 || editedBreed.isEmpty || editedSize.isEmpty || editedWeight == 0 {
                                 showAlert = true
                         } else {
@@ -81,11 +84,14 @@ struct DogInfoView: View {
                    }
                 }
             }
+            // Display an alert if required fields are missing
             .alert("Please fill in all required fields.", isPresented: $showAlert) {
                 Button("OK", role: .cancel) { }
             }
         }
     }
+    
+    // Function to update the dogManager with the edited values
     private func save() {
         dogManager.updateDog(
             name: editedName,

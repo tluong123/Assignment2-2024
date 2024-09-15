@@ -16,6 +16,7 @@ struct DogView: View {
     var body: some View {
         NavigationStack {
             Form {
+                //To display dogs information
                 Section(header: Text("Dog Information")) {
                     HStack {
                         Text("Name:")
@@ -47,7 +48,7 @@ struct DogView: View {
                         }
                     }
                 }
-                
+                //Edit Dog button 
                 Button(action: {
                     navigateToDogInfoView = true
                 }) {
