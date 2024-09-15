@@ -12,6 +12,7 @@ struct AddTaskView: View {
     @EnvironmentObject var taskManager: TaskManager
     @EnvironmentObject var dogManager: DogManager
     @Environment(\.presentationMode) var presentationMode
+    @State private var showMissingFieldsAlert = false
 
     var task: SimpleTask?
     @State private var taskTitle: String
@@ -21,7 +22,7 @@ struct AddTaskView: View {
 
     init(task: SimpleTask? = nil) { // Make the task parameter optional
         self.task = task
-        _taskTitle = State(initialValue: task?.title ?? "New Walk with ")
+        _taskTitle = State(initialValue: task?.title ?? "")
         _taskDueDate = State(initialValue: task?.dueDate ?? Date())
         _taskLocation = State(initialValue: task?.location ?? "")
         _taskDescription = State(initialValue: task?.description ?? "")
@@ -31,45 +32,53 @@ struct AddTaskView: View {
         NavigationStack {
             VStack {
                 VStack(alignment: .leading) {
-                    Text("Walk Name")
-                        .font(.headline)
-                    TextField("New Walk", text: $taskTitle)
+                    HStack {
+                        Text("Activity Name")
+                            .font(.headline)
+                        Text("*")
+                            .foregroundColor(.red)
+                    }
+                    TextField("Walk, Haircut, Medication, Vet Visit", text: $taskTitle)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .onAppear {
-                            if task == nil, !dogManager.dog.name.isEmpty { // Only append for new tasks
-                                taskTitle += dogManager.dog.name
-                            }
-                        }
                 }
                 .padding()
 
                 VStack(alignment: .leading) {
-                    Text("Location")
-                        .font(.headline)
+                    HStack {
+                        Text("Location")
+                            .font(.headline)
+                        Text("*")
+                            .foregroundColor(.red)
+                    }
                     TextField("Enter location", text: $taskLocation)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
                 .padding()
 
                 VStack(alignment: .leading) {
-                    Text("Description (optional)")
+                    Text("Description")
                         .font(.headline)
                     TextField("Enter description", text: $taskDescription)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
                 .padding()
 
-                DatePicker("Due Date", selection: $taskDueDate, displayedComponents: .date)
+                DatePicker("Scheduled Date", selection: $taskDueDate, displayedComponents: [.date, .hourAndMinute])
                     .padding()
 
                 Button(action: {
-                    if let task = task {
-                        editTask(task) // Edit existing task
+                    if taskTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                       taskLocation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        showMissingFieldsAlert = true
                     } else {
-                        addTask() // Add new task
+                        if let task = task {
+                            editTask(task)
+                        } else {
+                            addTask()
+                        }
                     }
                 }) {
-                    Text(task == nil ? "Add Walk" : "Save Changes") // Change button label based on context
+                    Text(task == nil ? "Add to Calendar" : "Save Changes")
                         .font(.headline)
                         .padding()
                         .background(Color.blue)
@@ -81,13 +90,16 @@ struct AddTaskView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle(task == nil ? "Add New Walk" : "Edit Walk") // Change title based on context
+            .navigationTitle(task == nil ? "Add New Activity" : "Edit Activity")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+            }
+            .alert("Please fill in all required fields.", isPresented: $showMissingFieldsAlert) {
+                Button("OK", role: .cancel) { }
             }
         }
     }

@@ -11,43 +11,50 @@ struct DogInfoView: View {
     @State private var editedBreed: String = ""
     @State private var editedSize: String = ""
     @State private var editedWeight: Int = 0
-    @State private var editedMedication: String = ""
+
     let possibleAges = Array(0...25)
     let possibleWeights = Array(0...100)
+    @State private var showAlert = false
     
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Dog Information")) {
-                    TextField("Name", text: $editedName)
-                        .onAppear {
-                            editedName = dogManager.dog.name
-                        }
-
-                    Picker("Age", selection: $editedAge) {
+                    LabeledContent("*Name:") {
+                        TextField("", text: $editedName)
+                            .onAppear {
+                                editedName = dogManager.dog.name
+                            }
+                    }
+                    Picker("*Age:", selection: $editedAge) {
                         ForEach(possibleAges, id: \.self) { age in
                             Text("\(age)").tag(age)
                             }
                         }
-                    TextField("Breed", text: $editedBreed)
-                        .onAppear {
-                            editedBreed = dogManager.dog.breed
-                        }
-                    TextField("Size", text: $editedSize)
-                        .onAppear {
-                            editedSize = dogManager.dog.size
-                        }
-
-                    Picker("Weight (kg)", selection: $editedWeight) {
+                    .onAppear {
+                        editedAge = dogManager.dog.age
+                    }
+                    LabeledContent("*Breed:") {
+                        TextField("", text: $editedBreed)
+                            .onAppear {
+                                editedBreed = dogManager.dog.breed
+                            }
+                    }
+                    LabeledContent("*Size:") {
+                        TextField("", text: $editedSize)
+                            .onAppear {
+                                editedSize = dogManager.dog.size
+                            }
+                    }
+                    Picker("*Weight(kg):", selection: $editedWeight) {
                         ForEach(possibleWeights, id: \.self) { weight in
                             Text("\(weight)").tag(weight)
                         }
                     }
+                    .onAppear {
+                        editedWeight = dogManager.dog.weight
+                    }
 
-                    TextField("Medication", text: $editedMedication)
-                        .onAppear {
-                            editedMedication = dogManager.dog.medication
-                        }
                 }
             }
             .navigationTitle("Your Dog's Info")
@@ -60,27 +67,34 @@ struct DogInfoView: View {
                         editedBreed = dogManager.dog.breed
                         editedSize = dogManager.dog.size
                         editedWeight = dogManager.dog.weight
-                        editedMedication = dogManager.dog.medication
 
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        // Update dogManager with edited values
-                        dogManager.updateDog(
-                            name: editedName,
-                            age: editedAge,
-                            breed: editedBreed,
-                            size: editedSize,
-                            weight: editedWeight,
-                            medication: editedMedication
-                        )
-
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                        if editedName.isEmpty || editedAge == 0 || editedBreed.isEmpty || editedSize.isEmpty || editedWeight == 0 {
+                                showAlert = true
+                        } else {
+                            save()
+                        }
+                   }
                 }
             }
+            .alert("Please fill in all required fields.", isPresented: $showAlert) {
+                Button("OK", role: .cancel) { }
+            }
         }
+    }
+    private func save() {
+        dogManager.updateDog(
+            name: editedName,
+            age: editedAge,
+            breed: editedBreed,
+            size: editedSize,
+            weight: editedWeight
+        )
+
+        presentationMode.wrappedValue.dismiss()
     }
 }

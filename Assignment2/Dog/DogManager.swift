@@ -15,12 +15,11 @@ class DogManager: ObservableObject {
         self.dog = dog
     }
     
-    func updateDog(name: String, age: Int, breed: String, size: String, weight: Int, medication: String) {
+    func updateDog(name: String, age: Int, breed: String, size: String, weight: Int) {
         dog.name = name
         dog.age = age
         dog.breed = breed
         dog.size = size
         dog.weight = weight
-        dog.medication = medication
     }
 }

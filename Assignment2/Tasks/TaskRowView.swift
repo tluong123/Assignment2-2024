@@ -36,7 +36,7 @@ struct TaskRowView: View {
                     .font(.subheadline)
                     .foregroundColor(.green)
             } else if let dueDate = task.dueDate {
-                Text("\(dueDate, style: .date)")
+                Text("\(dueDate, format: .dateTime)")
                     .font(.subheadline)
                     .foregroundColor(.red)
             }
@@ -44,21 +44,6 @@ struct TaskRowView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             isShowingDetails.toggle()
-        }
-        .swipeActions(edge: .trailing) {
-            Button(action: {
-                taskManager.toggleTaskCompletion(task)
-            }) {
-                Label("Complete", systemImage: "checkmark.circle.fill")
-            }
-            .tint(.green)
-
-            Button {
-                showEditTaskView = true
-            } label: {
-                Label("Edit", systemImage: "pencil")
-            }
-            .tint(.blue)
         }
         .sheet(isPresented: $showEditTaskView) {
             AddTaskView(task: task)

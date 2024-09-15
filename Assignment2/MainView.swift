@@ -48,11 +48,11 @@ struct MainView: View {
                     
                     
                     VStack(alignment: .leading) {
-                        Text("Upcoming Walks")
+                        Text("Upcoming Schedule")
                             .font(.headline)
                             .padding(.leading)
                         if taskManager.tasks.isEmpty {
-                            Text("No walks scheduled.")
+                            Text("No activites scheduled")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                                 .padding()
@@ -79,7 +79,7 @@ struct MainView: View {
                                                 .font(.subheadline)
                                                 .foregroundColor(.green)
                                         } else if let dueDate = task.dueDate {
-                                            Text("\(dueDate, style: .date)")
+                                            Text("\(dueDate, format: .dateTime)")
                                                 .font(.subheadline)
                                                 .foregroundColor(.red)
                                         }
@@ -102,13 +102,13 @@ struct MainView: View {
                             }
                         ) {
                             VStack {
-                                Image(systemName: "figure.walk")
+                                Image(systemName: "calendar")
                                     .font(.system(size: 24))
                                     .padding()
                                     .background(Color.blue)
                                     .foregroundColor(.white)
                                     .clipShape(Circle())
-                                Text("Your Walks")
+                                Text("Calendar")
                                     .font(.caption)
                                     .foregroundColor(.primary)
                             }

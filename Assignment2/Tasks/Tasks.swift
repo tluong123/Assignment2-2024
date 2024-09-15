@@ -17,14 +17,18 @@ protocol Task {
     var description: String { get set } // Add description property
 }
 
-class SimpleTask: Task, Identifiable, ObservableObject {
+class SimpleTask: Task, Identifiable, ObservableObject, Equatable {
     var id: UUID
     @Published var title: String
     @Published var isCompleted: Bool
     @Published var dueDate: Date?
     @Published var location: String
     @Published var description: String
-
+    
+    static func == (lhs: SimpleTask, rhs: SimpleTask) -> Bool {
+            return lhs.id == rhs.id
+        }
+    
     init(id: UUID = UUID(), title: String, isCompleted: Bool = false, dueDate: Date? = nil, location: String = "", description: String = "") {
         self.id = id
         self.title = title

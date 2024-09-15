@@ -11,9 +11,11 @@ import FSCalendar
 
 struct TaskListView: View {
     @EnvironmentObject var taskManager: TaskManager
+    @EnvironmentObject var dogManager: DogManager
     @State private var showAddTaskView = false
     @State private var selectedDate = Date()
     @State private var selectedTasks: Set<SimpleTask.ID> = []
+    @State private var showAddDogAlert = false
 
     var body: some View {
         NavigationStack {
@@ -24,7 +26,7 @@ struct TaskListView: View {
                 Spacer()
 
                 if taskManager.tasks.isEmpty {
-                    Text("No upcoming walks")
+                    Text("No upcoming tasks")
                         .foregroundColor(.gray)
                 } else {
                     List(selection: $selectedTasks) {
@@ -40,11 +42,14 @@ struct TaskListView: View {
                     }
                 }
 
-
                 Button(action: {
-                    showAddTaskView.toggle()
+//                    if dogManager.dog.name.isEmpty {
+//                        showAddDogAlert = true
+//                    } else {
+                        showAddTaskView.toggle()
+//                    }
                 }) {
-                    Text("Add New Walk")
+                    Text("Add New Activity")
                         .font(.headline)
                         .foregroundColor(.blue)
                 }
@@ -53,27 +58,16 @@ struct TaskListView: View {
                     AddTaskView()
                         .environmentObject(taskManager)
                 }
+                .alert("Please add your dog's information first.", isPresented: $showAddDogAlert) {
+                    Button("OK", role: .cancel) { }
+                }
 
                 Spacer()
-
-                if !taskManager.tasks.isEmpty && !selectedTasks.isEmpty {
-                    Button(action: {
-                        deleteSelectedTasks()
-                    }) {
-                        Text("Delete Selected Tasks")
-                            .foregroundColor(.red)
-                    }
-                    .padding()
-                }
             }
-            .navigationTitle("Walk Schedule")
+            .navigationTitle("Activity Calendar")
         }
     }
 
-    func deleteSelectedTasks() {
-        taskManager.tasks.removeAll(where: { selectedTasks.contains($0.id) })
-        selectedTasks.removeAll()
-    }
 }
 
 struct TaskListView_Previews: PreviewProvider {

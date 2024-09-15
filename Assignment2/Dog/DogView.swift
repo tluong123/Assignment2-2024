@@ -46,11 +46,6 @@ struct DogView: View {
                         Text("\(dogManager.dog.weight)")
                         }
                     }
-                    HStack {
-                        Text("Medication:")
-                        Spacer()
-                        Text(dogManager.dog.medication)
-                    }
                 }
                 
                 Button(action: {
